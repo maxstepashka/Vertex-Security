@@ -79,7 +79,3 @@ def read_file(path):
     with open(path, 'rb') as input_file:
         byte_str=input_file.read()
         return byte_str
-# Разработчик! Не забывай убирать нижние строки перед запуском!
-# s='{"Моя связка ключей": {"type": "RSA_PAIR", "value": {"priv": "C:\\\\Users\\Max\\Desktop\\\\keys\\private.pem", "pub": "C:\\\\Users\\\\Max\\\\Desktop\\\\keys\\\\public.pem"}}, "Публичный ключ Антонова": {"type": "RSA_PUB", "value": {"pub": "C:\\\\Users\\\\Max\\\\Desktop\\\\keys\\\\public.pem"}}, "Мой ключ от AES": {"type": "AES", "value": {"key": "37f8bcf372e2e0ea0a6dddf294a051e28b3ed7f3e3698212"}}, "Мой ключ от Blowfish": {"type": "Blowfish", "value": {"key": "39f83cff72e2d0eaaa6dddf294a051e28b3ed7f3e3698212"}}, "Наш секретный ключ": {"type": "AES", "value": {"key": "37f8bcf372e2e0ea0a6dddf294a051e28b3ed7f3e3698212"}}}'
-# print(s[64])
-# write_file('C:\\Users\\Max\\Yandex.Disk\\Documents\\programming\\Python\\Vertex\\files\\keys.json', encrypt_text(s, hashlib.sha256('z'.encode('UTF-8')).hexdigest()))

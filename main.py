@@ -160,7 +160,7 @@ def main(page: ft.Page):
 
     storage_add_button=ft.ElevatedButton(icon=ft.Icons.ADD, text='Добавить', on_click=lambda e: create_add_block())
 
-    storage_add_type_field=ft.Dropdown(hint_text='Тип', options=[ft.DropdownOption('Связка ключей RSA'), ft.DropdownOption('Публичный ключ RSA'), ft.DropdownOption('Ключ AES'), ft.DropdownOption('Ключ Blowfish')], width=330, on_change=lambda e: update_add_block())
+    storage_add_type_field=ft.Dropdown(hint_text='Тип', options=[ft.DropdownOption('Связка ключей RSA'), ft.DropdownOption('Публичный ключ RSA'), ft.DropdownOption('Ключ AES'), ft.DropdownOption('Ключ Blowfish'), ft.DropdownOption('Хеш SHA-256'), ft.DropdownOption('Хеш MD5'), ft.DropdownOption('Пароль')], width=330, on_change=lambda e: update_add_block())
 
     storage_add_name_field=ft.TextField(hint_text='Название', width=330)
 
@@ -169,19 +169,31 @@ def main(page: ft.Page):
         storage_add_rsa_pub_field.value = (
             "".join(map(lambda f: f.path, e.files)) if e.files else None
         )
-        storage_add_rsa_pub_field.update()
+        page.update()
 
     def pick_storage_add_rsa_priv_file(e: ft.FilePickerResultEvent):
         storage_add_rsa_priv_field.value = (
             "".join(map(lambda f: f.path, e.files)) if e.files else None
         )
-        storage_add_rsa_priv_field.update()
+        page.update()
 
     def pick_storage_add_rsa_pub_single_file(e: ft.FilePickerResultEvent):
         storage_add_rsa_pub_single_field.value = (
             "".join(map(lambda f: f.path, e.files)) if e.files else None
         )
-        storage_add_rsa_pub_single_field.update()
+        page.update()
+
+    def pick_storage_add_sha256_file(e: ft.FilePickerResultEvent):
+        storage_add_sha256_file_field.value = (
+            "".join(map(lambda f: f.path, e.files)) if e.files else None
+        )
+        page.update()
+
+    def pick_storage_add_md5_file(e: ft.FilePickerResultEvent):
+        storage_add_md5_file_field.value = (
+            "".join(map(lambda f: f.path, e.files)) if e.files else None
+        )
+        page.update()
 
     storage_add_rsa_pub_dialog = ft.FilePicker(on_result=pick_storage_add_rsa_pub_file)
     page.overlay.append(storage_add_rsa_pub_dialog)
@@ -191,6 +203,12 @@ def main(page: ft.Page):
 
     storage_add_rsa_pub_single_dialog = ft.FilePicker(on_result=pick_storage_add_rsa_pub_single_file)
     page.overlay.append(storage_add_rsa_pub_single_dialog)
+
+    storage_add_sha256_file_dialog = ft.FilePicker(on_result=pick_storage_add_sha256_file)
+    page.overlay.append(storage_add_sha256_file_dialog)
+
+    storage_add_md5_file_dialog = ft.FilePicker(on_result=pick_storage_add_md5_file)
+    page.overlay.append(storage_add_md5_file_dialog)
     
     storage_add_rsa_pub_button=ft.ElevatedButton(icon=ft.Icons.FOLDER_OPEN, text='Обзор', on_click=lambda e: storage_add_rsa_pub_dialog.pick_files(dialog_title='Файл публичного ключа', allow_multiple=False))
 
@@ -198,11 +216,25 @@ def main(page: ft.Page):
 
     storage_add_rsa_pub_single_button=ft.ElevatedButton(icon=ft.Icons.FOLDER_OPEN, text='Обзор', on_click=lambda e: storage_add_rsa_pub_single_dialog.pick_files(dialog_title='Файл публичного ключа', allow_multiple=False))
 
+    storage_add_sha256_file_button=ft.ElevatedButton(icon=ft.Icons.FOLDER_OPEN, text='Обзор', on_click=lambda e: storage_add_sha256_file_dialog.pick_files(dialog_title='Файл', allow_multiple=False))
+
+    storage_add_md5_file_button=ft.ElevatedButton(icon=ft.Icons.FOLDER_OPEN, text='Обзор', on_click=lambda e: storage_add_md5_file_dialog.pick_files(dialog_title='Файл', allow_multiple=False))
+
     storage_add_rsa_pub_field=ft.TextField(hint_text='Публичный ключ RSA', width=330)
 
     storage_add_rsa_priv_field=ft.TextField(hint_text='Приватный ключ RSA', width=330)
 
     storage_add_rsa_pub_single_field=ft.TextField(hint_text='Публичный ключ RSA', width=330)
+
+    storage_add_sha256_hash_field=ft.TextField(hint_text='Хеш SHA-256', width=330)
+
+    storage_add_sha256_file_field=ft.TextField(hint_text='Путь', width=330)
+
+    storage_add_md5_hash_field=ft.TextField(hint_text='Хеш MD5', width=330)
+
+    storage_add_md5_file_field=ft.TextField(hint_text='Путь', width=330)
+    
+    storage_add_password_field=ft.TextField(hint_text='Пароль', width=330)
 
     storage_add_aes_field=ft.TextField(hint_text='Ключ AES', width=330)
     
@@ -219,19 +251,32 @@ def main(page: ft.Page):
         storage_edit_rsa_pub_field.value = (
             "".join(map(lambda f: f.path, e.files)) if e.files else None
         )
-        storage_edit_rsa_pub_field.update()
+        page.update()
 
     def pick_storage_edit_rsa_priv_file(e: ft.FilePickerResultEvent):
         storage_edit_rsa_priv_field.value = (
             "".join(map(lambda f: f.path, e.files)) if e.files else None
         )
-        storage_edit_rsa_priv_field.update()
+        page.update()
 
     def pick_storage_edit_rsa_pub_single_file(e: ft.FilePickerResultEvent):
         storage_edit_rsa_pub_single_field.value = (
             "".join(map(lambda f: f.path, e.files)) if e.files else None
         )
-        storage_edit_rsa_pub_single_field.update()
+        page.update()
+
+    def pick_storage_edit_sha256_file(e: ft.FilePickerResultEvent):
+        storage_edit_sha256_file_field.value = (
+            "".join(map(lambda f: f.path, e.files)) if e.files else None
+        )
+        page.update()
+
+    def pick_storage_edit_md5_file(e: ft.FilePickerResultEvent):
+        storage_edit_md5_file_field.value = (
+            "".join(map(lambda f: f.path, e.files)) if e.files else None
+        )
+        page.update()
+        
 
     storage_edit_rsa_pub_dialog = ft.FilePicker(on_result=pick_storage_edit_rsa_pub_file)
     page.overlay.append(storage_edit_rsa_pub_dialog)
@@ -242,17 +287,37 @@ def main(page: ft.Page):
     storage_edit_rsa_pub_single_dialog = ft.FilePicker(on_result=pick_storage_edit_rsa_pub_single_file)
     page.overlay.append(storage_edit_rsa_pub_single_dialog)
     
+    storage_edit_sha256_file_dialog = ft.FilePicker(on_result=pick_storage_edit_sha256_file)
+    page.overlay.append(storage_edit_sha256_file_dialog)
+
+    storage_edit_md5_file_dialog = ft.FilePicker(on_result=pick_storage_edit_md5_file)
+    page.overlay.append(storage_edit_md5_file_dialog)
+
     storage_edit_rsa_pub_button=ft.TextButton(icon=ft.Icons.FOLDER_OPEN, text='Обзор', on_click=lambda e: storage_edit_rsa_pub_dialog.pick_files(dialog_title='Файл публичного ключа', allow_multiple=False))
 
     storage_edit_rsa_priv_button=ft.TextButton(icon=ft.Icons.FOLDER_OPEN, text='Обзор', on_click=lambda e: storage_edit_rsa_priv_dialog.pick_files(dialog_title='Файл приватного ключа', allow_multiple=False))
 
     storage_edit_rsa_pub_single_button=ft.TextButton(icon=ft.Icons.FOLDER_OPEN, text='Обзор', on_click=lambda e: storage_edit_rsa_pub_single_dialog.pick_files(dialog_title='Файл публичного ключа', allow_multiple=False))
 
+    storage_edit_sha256_file_button=ft.ElevatedButton(icon=ft.Icons.FOLDER_OPEN, text='Обзор', on_click=lambda e: storage_edit_sha256_file_dialog.pick_files(dialog_title='Файл', allow_multiple=False))
+
+    storage_edit_md5_file_button=ft.ElevatedButton(icon=ft.Icons.FOLDER_OPEN, text='Обзор', on_click=lambda e: storage_edit_md5_file_dialog.pick_files(dialog_title='Файл', allow_multiple=False))
+
     storage_edit_rsa_pub_field=ft.TextField(hint_text='Публичный ключ RSA', width=330)
 
     storage_edit_rsa_priv_field=ft.TextField(hint_text='Приватный ключ RSA', width=330)
 
     storage_edit_rsa_pub_single_field=ft.TextField(hint_text='Публичный ключ RSA', width=330)
+
+    storage_edit_sha256_hash_field=ft.TextField(hint_text='Хеш SHA-256', width=330)
+
+    storage_edit_sha256_file_field=ft.TextField(hint_text='Путь', width=330)
+
+    storage_edit_md5_hash_field=ft.TextField(hint_text='Хеш MD5', width=330)
+
+    storage_edit_md5_file_field=ft.TextField(hint_text='Путь', width=330)
+    
+    storage_edit_password_field=ft.TextField(hint_text='Пароль', width=330)
 
     storage_edit_aes_field=ft.TextField(hint_text='Ключ AES', width=330)
 
@@ -293,11 +358,18 @@ def main(page: ft.Page):
                 case 'RSA_PUB':
                     block['type'] = ft.Text('Публичный ключ RSA', weight=ft.FontWeight.BOLD, size=19)
                     block['text'] = ft.Text('Публичный ключ: ' + keys_json[name]['value']['pub'], weight=ft.FontWeight.BOLD, size=18, selectable=True)
-                
                 case 'RSA_PAIR':
                     block['type'] = ft.Text('Связка ключей RSA', weight=ft.FontWeight.BOLD, size=19)
                     block['text'] = ft.Text('Публичный ключ: ' + keys_json[name]['value']['pub'] + '\n' + 'Приватный ключ: ' + keys_json[name]['value']['priv'], size=18, weight=ft.FontWeight.BOLD, selectable=True)
-
+                case 'SHA-256':
+                    block['type'] = ft.Text('Хеш SHA-256', weight=ft.FontWeight.BOLD, size=19)
+                    block['text'] = ft.Text('Хеш: ' + keys_json[name]['value']['hash'] + '\n' + 'Файл: ' + keys_json[name]['value']['file'], weight=ft.FontWeight.BOLD, size=18, selectable=True)
+                case 'MD5':
+                    block['type'] = ft.Text('Хеш MD5', weight=ft.FontWeight.BOLD, size=19)
+                    block['text'] = ft.Text('Хеш: ' + keys_json[name]['value']['hash'] + '\n' + 'Файл: ' + keys_json[name]['value']['file'], weight=ft.FontWeight.BOLD, size=18, selectable=True)
+                case 'Password':
+                    block['type'] = ft.Text('Пароль', weight=ft.FontWeight.BOLD, size=19)
+                    block['text'] = ft.Text('Пароль: ' + keys_json[name]['value']['password'], weight=ft.FontWeight.BOLD, size=18, selectable=True)
                 case _:
                     block['type'] = ft.Text('Ключ ' + keys_json[name]['type'], weight=ft.FontWeight.BOLD, size=19)
                     block['text'] = ft.Text('Ключ: ' + keys_json[name]['value']['key'], weight=ft.FontWeight.BOLD, size=18, selectable=True)
@@ -310,7 +382,7 @@ def main(page: ft.Page):
         to_remove=[]
         keys_json=json.loads(aes_engine.decrypt_text(aes_engine.read_file(Path('files/keys.json').resolve()), hashlib.sha256(storage_password_field.value.encode('UTF-8')).hexdigest()).replace('\\', '\\\\'))
         for name in keys_json:
-            if storage_search_field.value not in name:
+            if storage_search_field.value.lower() not in name.lower():
                 to_remove.append(name)
         for name in to_remove:
             keys_json.pop(name)
@@ -358,6 +430,7 @@ def main(page: ft.Page):
         page.update()
 
     def create_add_block():
+        storage_add_button.visible=False
         storage_listview.controls.insert(1, ft.Column([ft.Text('Добавление', weight=ft.FontWeight.BOLD, size=23), ft.Text('Тип', weight=ft.FontWeight.BOLD, size=18), storage_add_type_field, storage_add_cancel_button, ft.Divider()]))
         page.views.clear()
         page.views.append(
@@ -380,6 +453,13 @@ def main(page: ft.Page):
                 storage_listview.controls[1]=ft.Column([ft.Text('Добавление', weight=ft.FontWeight.BOLD, size=23), ft.Text('Тип', weight=ft.FontWeight.BOLD, size=18), storage_add_type_field, ft.Text('Название', weight=ft.FontWeight.BOLD, size=18), storage_add_name_field, ft.Text('Значение', weight=ft.FontWeight.BOLD, size=18), storage_add_aes_field, ft.Row([storage_add_submit_button, storage_add_cancel_button]), ft.Divider()])
             case 'Ключ Blowfish':
                 storage_listview.controls[1]=ft.Column([ft.Text('Добавление', weight=ft.FontWeight.BOLD, size=23), ft.Text('Тип', weight=ft.FontWeight.BOLD, size=18), storage_add_type_field, ft.Text('Название', weight=ft.FontWeight.BOLD, size=18), storage_add_name_field, ft.Text('Значение', weight=ft.FontWeight.BOLD, size=18), storage_add_blowfish_field, ft.Row([storage_add_submit_button, storage_add_cancel_button]), ft.Divider()])
+            case 'Хеш SHA-256':
+                storage_listview.controls[1]=ft.Column([ft.Text('Добавление', weight=ft.FontWeight.BOLD, size=23), ft.Text('Тип', weight=ft.FontWeight.BOLD, size=18), storage_add_type_field, ft.Text('Название', weight=ft.FontWeight.BOLD, size=18), storage_add_name_field, ft.Text('Значение', weight=ft.FontWeight.BOLD, size=18), storage_add_sha256_hash_field, ft.Row([storage_add_sha256_file_field, storage_add_sha256_file_button]), ft.Row([storage_add_submit_button, storage_add_cancel_button]), ft.Divider()])
+            case 'Хеш MD5':
+                storage_listview.controls[1]=ft.Column([ft.Text('Добавление', weight=ft.FontWeight.BOLD, size=23), ft.Text('Тип', weight=ft.FontWeight.BOLD, size=18), storage_add_type_field, ft.Text('Название', weight=ft.FontWeight.BOLD, size=18), storage_add_name_field, ft.Text('Значение', weight=ft.FontWeight.BOLD, size=18), storage_add_md5_hash_field, ft.Row([storage_add_md5_file_field, storage_add_md5_file_button]), ft.Row([storage_add_submit_button, storage_add_cancel_button]), ft.Divider()])
+            case 'Пароль':
+                storage_listview.controls[1]=ft.Column([ft.Text('Добавление', weight=ft.FontWeight.BOLD, size=23), ft.Text('Тип', weight=ft.FontWeight.BOLD, size=18), storage_add_type_field, ft.Text('Название', weight=ft.FontWeight.BOLD, size=18), storage_add_name_field, ft.Text('Значение', weight=ft.FontWeight.BOLD, size=18), storage_add_password_field, ft.Row([storage_add_submit_button, storage_add_cancel_button]), ft.Divider()])
+            
         page.views.clear()
         page.views.append(
             ft.View(
@@ -392,6 +472,7 @@ def main(page: ft.Page):
         page.update()
 
     def remove_add_block():
+        storage_add_button.visible=True
         storage_listview.controls.pop(1)
         storage_add_type_field.value=None
         page.views.clear()
@@ -406,6 +487,7 @@ def main(page: ft.Page):
         page.update()
     
     def storage_add():
+        storage_add_button.visible=True
         keys_json=json.loads(aes_engine.decrypt_text(aes_engine.read_file(Path('files/keys.json').resolve()), hashlib.sha256(storage_password_field.value.encode('UTF-8')).hexdigest()).replace('\\', '\\\\'))
         match storage_add_type_field.value:
             case 'Связка ключей RSA':
@@ -416,6 +498,12 @@ def main(page: ft.Page):
                 key={storage_add_name_field.value: {"type": "AES", "value": {"key": storage_add_aes_field.value}}}
             case 'Ключ Blowfish':
                 key={storage_add_name_field.value: {"type": "Blowfish", "value": {"key": storage_add_blowfish_field.value}}}
+            case 'Хеш SHA-256':
+                key={storage_add_name_field.value: {"type": "SHA-256", "value": {"hash": storage_add_sha256_hash_field.value, "file": storage_add_sha256_file_field.value}}}
+            case 'Хеш MD5':
+                key={storage_add_name_field.value: {"type": "MD5", "value": {"hash": storage_add_md5_hash_field.value, "file": storage_add_md5_file_field.value}}}
+            case 'Пароль':
+                key={storage_add_name_field.value: {"type": "Password", "value": {"password": storage_add_password_field.value}}}
         keys_json = key | keys_json
         aes_engine.write_file(Path('files/keys.json').resolve(), aes_engine.encrypt_text(str(keys_json).replace("'", '"').replace('\\\\', '\\'), hashlib.sha256(storage_password_field.value.encode('UTF-8')).hexdigest()))
         make_keys_blocks(keys_json)
@@ -448,6 +536,17 @@ def main(page: ft.Page):
                 storage_edit_dialog.content=ft.Column([ft.Text('Публичный ключ' , weight=ft.FontWeight.BOLD, size=19), ft.Row([storage_edit_rsa_pub_field, storage_edit_rsa_pub_button], width=420), ft.Text('Приватный ключ' , weight=ft.FontWeight.BOLD, size=19), ft.Row([storage_edit_rsa_priv_field, storage_edit_rsa_priv_button], width=420)], height=175)
                 storage_edit_rsa_pub_field.value=keys_json[key_name]['value']['pub']
                 storage_edit_rsa_priv_field.value=keys_json[key_name]['value']['priv']
+            case "SHA-256":
+                storage_edit_dialog.content=ft.Column([ft.Text('Хеш SHA-256' , weight=ft.FontWeight.BOLD, size=19), storage_edit_sha256_hash_field, ft.Text('Файл' , weight=ft.FontWeight.BOLD, size=19), ft.Row([storage_edit_sha256_file_field, storage_edit_sha256_file_button], width=420)], height=175)
+                storage_edit_sha256_hash_field.value=keys_json[key_name]['value']['hash']
+                storage_edit_sha256_file_field.value=keys_json[key_name]['value']['file']
+            case "MD5":
+                storage_edit_dialog.content=ft.Column([ft.Text('Хеш MD5' , weight=ft.FontWeight.BOLD, size=19), storage_edit_md5_hash_field, ft.Text('Файл' , weight=ft.FontWeight.BOLD, size=19), ft.Row([storage_edit_md5_file_field, storage_edit_md5_file_button], width=420)], height=175)
+                storage_edit_md5_hash_field.value=keys_json[key_name]['value']['hash']
+                storage_edit_md5_file_field.value=keys_json[key_name]['value']['file']
+            case "Password":
+                storage_edit_dialog.content=ft.Column([ft.Text('Пароль' , weight=ft.FontWeight.BOLD, size=19), storage_edit_password_field], height=80)
+                storage_edit_password_field.value=keys_json[key_name]['value']['password']
         storage_edit_dialog.data={'name': key_name, 'type': key_type}
         page.open(storage_edit_dialog)
         page.update()
@@ -468,6 +567,14 @@ def main(page: ft.Page):
             case "RSA_PAIR":
                 keys_json[storage_edit_dialog.data['name']]['value']['pub']=storage_edit_rsa_pub_field.value
                 keys_json[storage_edit_dialog.data['name']]['value']['priv']=storage_edit_rsa_priv_field.value
+            case "SHA-256":
+                keys_json[storage_edit_dialog.data['name']]['value']['hash']=storage_edit_sha256_hash_field.value
+                keys_json[storage_edit_dialog.data['name']]['value']['file']=storage_edit_sha256_file_field.value
+            case "MD5":
+                keys_json[storage_edit_dialog.data['name']]['value']['hash']=storage_edit_md5_hash_field.value
+                keys_json[storage_edit_dialog.data['name']]['value']['file']=storage_edit_md5_file_field.value
+            case "Password":
+                keys_json[storage_edit_dialog.data['name']]['value']['password']=storage_edit_password_field.value
         aes_engine.write_file(Path('files/keys.json').resolve(), aes_engine.encrypt_text(str(keys_json).replace("'", '"').replace('\\\\', '\\'), hashlib.sha256(storage_password_field.value.encode('UTF-8')).hexdigest()))
         page.close(storage_edit_dialog)
         print("PAGE UPDATING")
