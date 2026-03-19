@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import webbrowser
+import time
 
 def main(page: ft.Page):
     page.window.height=700
@@ -327,20 +328,20 @@ def main(page: ft.Page):
         try:
             keys_json=json.loads(aes_engine.decrypt_text(aes_engine.read_file(Path('files/keys.json').resolve()), hashlib.sha256(storage_password_field.value.encode('UTF-8')).hexdigest()).replace('\\', '\\\\'))
             page.close(storage_password_dialog)
-            print('PAGE UPDATING')
+            time.sleep(0.1)
             page.update()
             make_keys_blocks(keys_json)
             page.go('/key_storage')
         except:
             page.open(ft.SnackBar(content=ft.Text('Неверный пароль.'), show_close_icon=True, bgcolor=ft.Colors.RED))
             page.close(storage_password_dialog)
-            print('PAGE UPDATING')
+            time.sleep(0.1)
             page.update()
 
     def setup_keys():
         aes_engine.write_file(Path('files/keys.json').resolve(), aes_engine.encrypt_text("{}", hashlib.sha256(setup_storage_password_field.value.encode('UTF-8')).hexdigest()))
         page.close(setup_storage_password_dialog)
-        print('PAGE UPDATING')
+        time.sleep(0.1)
         page.update()
         storage_password_field.value=setup_storage_password_field.value
         setup_storage_password_field.value=None
@@ -577,7 +578,7 @@ def main(page: ft.Page):
                 keys_json[storage_edit_dialog.data['name']]['value']['password']=storage_edit_password_field.value
         aes_engine.write_file(Path('files/keys.json').resolve(), aes_engine.encrypt_text(str(keys_json).replace("'", '"').replace('\\\\', '\\'), hashlib.sha256(storage_password_field.value.encode('UTF-8')).hexdigest()))
         page.close(storage_edit_dialog)
-        print("PAGE UPDATING")
+        time.sleep(0.1)
         page.update()
         make_keys_blocks(keys_json)
         page.views.clear()
